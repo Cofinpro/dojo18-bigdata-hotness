@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 /**
  * Created by David Olah on 20.04.2018.
+ * Stolen from: https://de.hortonworks.com/tutorial/setting-up-a-spark-development-environment-with-java/
  */
 public class SandboxApplication {
     public static void main(String[] args) {
