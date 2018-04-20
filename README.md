@@ -1,5 +1,14 @@
 # dojo18-bigdata-hotness
 
+## Evaluation des Smack Stacks
+**S**park:
+**M**esos: Mesos wird repräsentiert durch DC/OS und dient der Steuerung und Provisionierung eines Clusters.
+**A**kka:
+**C**assandra: Distributed NoSQL-Datenbank
+**K**afka: Distributed Queue
+
+Evaluationsergebnisse zu DC/OS finden sich in [DCOS.md](DCOS.md)
+
 ## VagrantConfig
 Die Original-Konfiguration für DC/OS aus dem [DC/OS Repository](https://github.com/dcos/dcos-vagrant) benötigt
 ca. 12 GB Arbeitsspeicher und 8 virtuelle Prozessoren. Für Notebooks ist diese Hardware-Konfiguration zu
@@ -15,3 +24,10 @@ cd dcos-vagrant
 cp dojo18-bigdata-hotness/VagrantConfig.yaml .
 vagrant up
 ```
+## DC/OS und SMACK
+Der Smack-Stack kann über die DC/OS CLI installiert werden. Die CLI ist zunächst über das Web-Frontend
+zu installieren. Nach der Authentifizierung über `dcos auth login` können zusätzliche Pakete über
+`dcos package install` installiert werden.
+
+### Cassandra
+Installiert wird Cassandra über `dcos install package cassandra`.
