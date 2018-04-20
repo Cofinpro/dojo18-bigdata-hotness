@@ -24,6 +24,7 @@ public class CsvToKafkaProducer {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     public void produceFromCsvFile(File file, CsvToTwitterDataMapping mapping, Producer<String, String> kafkaProducer) throws IOException {
+        long count = 0;
         Reader in = new FileReader(file);
         CSVFormat csvFormat = CSVFormat.EXCEL
                 .withDelimiter(';')
@@ -42,7 +43,10 @@ public class CsvToKafkaProducer {
             logger.trace("Sending {} to Kafka-Topic = {}", kafkaTweet, TOPIC_NAME_FOR_TWEETS);
             String json = buildJsonForKafkaTweet(kafkaTweet);
             kafkaProducer.send(new ProducerRecord<>(TOPIC_NAME_FOR_TWEETS, json));
+            count++;
         }
+
+        logger.info("Sent {} records to kafka", count);
     }
 
     String getValueFromRecordForTweetContentWithMapping(CSVRecord csvRecord, TweetContent tweetContent, CsvToTwitterDataMapping mapping) {
