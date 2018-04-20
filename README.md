@@ -1,5 +1,14 @@
 # dojo18-bigdata-hotness
 
+## Evaluation des Smack Stacks
+**S**park:
+**M**esos: Mesos wird repräsentiert durch DC/OS und dient der Steuerung und Provisionierung eines Clusters.
+**A**kka:
+**C**assandra: Distributed NoSQL-Datenbank
+**K**afka: Distributed Queue
+
+Evaluationsergebnisse zu DC/OS finden sich in [DCOS.md](DCOS.md)
+
 ## VagrantConfig
 Die Original-Konfiguration für DC/OS aus dem [DC/OS Repository](https://github.com/dcos/dcos-vagrant) benötigt
 ca. 12 GB Arbeitsspeicher und 8 virtuelle Prozessoren. Für Notebooks ist diese Hardware-Konfiguration zu
