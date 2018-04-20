@@ -40,6 +40,14 @@ Entnommen aus [Kafka-Quickstart](https://kafka.apache.org/quickstart)
 * In den extrahierten Ordner wechseln (`cd kafka_2.11-1.1.0`)
 
 ## Java-Programm für CSV-Import
-todo
+Derzeit ist das Programm nur in der Lage eine CSV-Datei aus dem Resources-Ordner
+in Kafka hineinzupushen. Folgende Voraussetzungen müssen gelten:
 
+* Zookeeper und Kafka laufen und nutzen Standard-Ports
+* In Kafka existiert eine Topic namens _tweets_.
 
+Programm ist ausführbar über `mvn exec:java`, wenn man sich im Working-Directory von _csv-to-kafka-twitter-producer_ befindet.
+Um zu sehen, ob die Daten wirklich in Kafka landen, kann der von Kafka mitgelieferte console-consumer
+in der Shell gestartet werden.
+Der Consumer lässt sich mit folgender Anweisung starten (Script befindet sich im kafka-bin-Ordner, unter Unix .bat durch .sh ersetzen):
+`./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic tweets`

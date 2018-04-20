@@ -8,6 +8,8 @@
     <artifactId>csv-to-kafka-twitter-producer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -63,6 +65,26 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Jar file entry point -->
+                            <mainClass>de.cofinpro.dojo18.bigdata.kafkaproducer.Application</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>de.cofinpro.dojo18.bigdata.kafkaproducer.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>
