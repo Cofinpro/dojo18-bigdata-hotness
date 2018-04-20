@@ -15,3 +15,10 @@ cd dcos-vagrant
 cp dojo18-bigdata-hotness/VagrantConfig.yaml .
 vagrant up
 ```
+## DC/OS und SMACK
+Der Smack-Stack kann über die DC/OS CLI installiert werden. Die CLI ist zunächst über das Web-Frontend
+zu installieren. Nach der Authentifizierung über `dcos auth login` können zusätzliche Pakete über
+`dcos package install` installiert werden.
+
+### Cassandra
+Installiert wird Cassandra über `dcos install package cassandra`.
