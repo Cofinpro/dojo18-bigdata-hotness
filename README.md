@@ -31,3 +31,15 @@ zu installieren. Nach der Authentifizierung über `dcos auth login` können zus�
 
 ### Cassandra
 Installiert wird Cassandra über `dcos install package cassandra`.
+
+## Kafka
+Entnommen aus [Kafka-Quickstart](https://kafka.apache.org/quickstart)
+
+* Kafka herunterladen (https://www.apache.org/dyn/closer.cgi?path=/kafka/1.1.0/kafka_2.11-1.1.0.tgz)
+* Kafka an gewünschten Ort extrahieren (`tar -xzf kafka_2.11-1.1.0.tgz`)
+* In den extrahierten Ordner wechseln (`cd kafka_2.11-1.1.0`)
+
+## Java-Programm für CSV-Import
+todo
+
+
