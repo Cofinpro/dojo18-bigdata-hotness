@@ -39,6 +39,12 @@ Entnommen aus [Kafka-Quickstart](https://kafka.apache.org/quickstart)
 * Kafka an gewünschten Ort extrahieren (`tar -xzf kafka_2.11-1.1.0.tgz`)
 * In den extrahierten Ordner wechseln (`cd kafka_2.11-1.1.0`)
 
+Anweisungen für Windows (relativ aus kafka-home):
+```
+bin/windows/zookeeper-server-start.bat config/zookeeper.properties
+bin/windows/kafka-server-start.bat config/server.properties
+```
+
 ## Java-Programm für CSV-Import
 Derzeit ist das Programm nur in der Lage eine CSV-Datei aus dem Resources-Ordner
 in Kafka hineinzupushen. Folgende Voraussetzungen müssen gelten:
@@ -51,3 +57,24 @@ Um zu sehen, ob die Daten wirklich in Kafka landen, kann der von Kafka mitgelief
 in der Shell gestartet werden.
 Der Consumer lässt sich mit folgender Anweisung starten (Script befindet sich im kafka-bin-Ordner, unter Unix .bat durch .sh ersetzen):
 `./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic tweets`
+
+## Spark
+Anleitung für die lokale Installation:
+* Spark herunterladen
+* [Win-utils](https://github.com/steveloughran/winutils/blob/master/hadoop-2.6.0/bin/winutils.exe) herunterladen
+* User-Variable SPARK_HOME setzen mit Wert des Home-Directories des extrahierten Spark-Ordners
+* System-Variable PATH erweitern um Wert aus SPARK_HOME\bin
+* User-Variable HADOOP_HOME setzen auf gleichen Ordner wie SPARK_HOME
+
+Generelle Quellen, woraus die Anleitung erzeugt wurde:
+* http://www.ics.uci.edu/~shantas/Install_Spark_on_Windows10.pdf
+* https://stackoverflow.com/a/39525952
+
+Um zu testen, ob das Setup erfolgreich war, in einer neu-geöffneten Konsole `spark-shell`
+ausführen. Es sollten keine Fehlermeldungen zu sehen sein.
+
+Es ist möglich eine Spark-Applikation in IntelliJ auszuführen und zu debuggen. Dazu muss folgende Dependency über Maven eingebunden werden:
+Das Maven-Modul `spark-kafka-to-system-out` kann in IntelliJ ausgeführt werden.
+Dazu muss die Run-Configuration folgende Einstellungen besitzen:
+* Working-Directory: Ordner des Maven-Moduls `spark-kafka-to-system-out`
+* Environment Variables: HADOOP_HOME = Gleicher Ordner wie oben
