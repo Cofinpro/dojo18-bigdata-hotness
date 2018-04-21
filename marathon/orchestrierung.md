@@ -55,7 +55,7 @@ Fällt ein Knoten aus, so wird dies durch Marathon automatisch detektiert und di
 
 In AWS wurde der kurzfristige Ausfall eines Knotens durch Stoppen einer EC2-Instanz simuliert.
 
-![Fehlererkennung](fault1.png)
+![Fehlererkennung](fault.png)
 
 Kurz nach der Fehlererkennung werden die Anwendungen skaliert.
 

@@ -3,7 +3,7 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "cofinpro/twitter-producer:latest"
+            "image": "cofinpro/twitter-producer:1.2"
         }
     },
     "cmd": "/usr/bin/java -jar twitterProducer.jar -b$KAFKA_BROKER",

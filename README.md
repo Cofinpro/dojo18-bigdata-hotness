@@ -2,10 +2,14 @@
 
 ## Evaluation des Smack Stacks
 **S**park:
-**M**esos: Mesos wird repräsentiert durch DC/OS und dient der Steuerung und Provisionierung eines Clusters.
+
+[**M**esos](DCOS.md): Mesos wird repräsentiert durch DC/OS und dient der Steuerung und Provisionierung eines Clusters.
+
 **A**kka:
+
 **C**assandra: Distributed NoSQL-Datenbank
-**K**afka: Distributed Queue
+
+[**K**afka](kafka): Distributed Queue
 
 Evaluationsergebnisse zu DC/OS finden sich in [DCOS.md](DCOS.md)
 
