@@ -14,3 +14,8 @@ Eine Anwendung wird in Form von JSON-Scripten beschrieben, die eine Aktion ausf�
 ```
 
 Im Beispiel handelt es sich um eine einfache Kommandozeilenanwendung, die alle 5 Sekunden `Hello Marathon` auf der Kommandozeile ausgibt.
+
+## Zu Java-Anwendungen
+Es besteht die Möglichkeit, Java-Anwendungen nativ auf Mesos zu betreiben. Die Empfehlung von Mesosphere allerdings lautet, [Java in einem Container zu betreiben](https://mesosphere.com/blog/java-container/).
+
+Um Docker-Container in DC/OS deployen zu können, müssen diese entweder im Docker Hub vorhanden sein oder es muss zusätzlich eine private Docker Registry betrieben werden.

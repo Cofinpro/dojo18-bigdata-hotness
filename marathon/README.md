@@ -11,5 +11,6 @@ Services werden ebenfalls über Marathon provisioniert.
 Aktuell betrachtet wird
 * [Container-Orchestrierung](orchestrierung.md)
 * [Anwendungsentwicklung (Container-Erstellung)](container.md)
+* [Anwendungsentwicklung - Rezepte](https://mesosphere.github.io/marathon/docs/recipes.html)
 
 
