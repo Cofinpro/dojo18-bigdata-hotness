@@ -16,3 +16,11 @@ Um zu sehen, ob die Daten wirklich in Kafka landen, kann der von Kafka mitgelief
 in der Shell gestartet werden.
 Der Consumer lässt sich mit folgender Anweisung starten (Script befindet sich im kafka-bin-Ordner, unter Unix .bat durch .sh ersetzen):
 `./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic tweets`
+
+## Commandline-Options
+```
+usage: <this application>
+ -b,--bootstrap-servers <arg>   addresses of kafka bootstrap servers
+                                (multiple values allowed, separated by ','
+ -h,--help                      shows this help text
+ ```
