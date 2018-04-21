@@ -15,6 +15,14 @@ Jedes Publisher-Subscriber-Pattern benötigt ein **Topic** über das sich die _T
 dcos kafka topic create tweets --partitions 1 --replication 1
 ```
 
+Erzeugt das Topic und bestätigt die Erzeugung mit der Meldung:
+
+```
+ {
+    "message": "Output: Created topic \"tweets\".\n"
+ }
+```
+
 Damit steht dem Twitter Producer das Topic tweets zur Verfügung.
 
 ### Deployment des Twitter Producers
