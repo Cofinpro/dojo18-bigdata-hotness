@@ -1,5 +1,6 @@
 package de.cofinpro.dojo18.bigdata.kafkaproducer;
 
+import org.apache.commons.cli.*;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Properties;
 
 /**
@@ -21,8 +23,12 @@ public class Application {
     public static void main(String[] args) throws IOException, InterruptedException {
         logger.info("Starting application");
 
+        CommandLine commandLine = getCommandLine(args);
+
+        String bootstrapServers = commandLine.getOptionValue(CommandlineOption.BOOTSTRAP_SERVERS.getShortName(), "localhost:9092");
+
         Properties props = new Properties();
-        props.put("bootstrap.servers", "localhost:9092");
+        props.put("bootstrap.servers", bootstrapServers);
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);
@@ -49,5 +55,22 @@ public class Application {
             Thread.sleep(5000);
         }
         kafkaProducer.close();
+    }
+
+    private static CommandLine getCommandLine(String args[]) {
+        CommandLineHelper commandLineHelper = new CommandLineHelper();
+        Optional<CommandLine> commandLineOptional = commandLineHelper.parseCommandLine(args);
+
+        if (!commandLineOptional.isPresent()) {
+            throw new RuntimeException("Could not parse commandline");
+        }
+
+        CommandLine commandLine = commandLineOptional.get();
+
+        if (commandLine.hasOption(CommandlineOption.HELP.getShortName())) {
+            commandLineHelper.showHelp();
+        }
+
+        return commandLineOptional.get();
     }
 }
