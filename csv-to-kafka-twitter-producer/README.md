@@ -9,6 +9,8 @@ in Kafka hineinzupushen. Folgende Voraussetzungen müssen gelten:
 * Zookeeper und Kafka laufen und nutzen Standard-Ports
 * In Kafka existiert eine Topic namens _tweets_.
 
+Unter Umständen muss das _model_-Modul per `mvn install` gebaut werden.
+
 Programm ist ausführbar über `mvn exec:java`, wenn man sich im Working-Directory von _csv-to-kafka-twitter-producer_ befindet.
 Um zu sehen, ob die Daten wirklich in Kafka landen, kann der von Kafka mitgelieferte console-consumer
 in der Shell gestartet werden.

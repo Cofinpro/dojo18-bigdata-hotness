@@ -1,7 +1,7 @@
-package de.cofinpro.dojo18.bigdata.kafkaproducer;
+package de.cofinpro.dojo18.bigdata.model;
 
 /**
- * Created by David Olah on 20.04.2018.
+ * Created by David Olah on 21.04.2018.
  */
 public class KafkaTweet {
     String id;

@@ -1,5 +1,6 @@
 package de.cofinpro.dojo18.bigdata.kafkaproducer;
 
+import de.cofinpro.dojo18.bigdata.model.KafkaTweet;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
