@@ -16,8 +16,11 @@ Dazu haben wir das AWS Cloud Formation Template [dcos.cloudformation.json](dcos.
 * 1 Public Slave
 * 5 Private Slaves
 
+Nach dem Einrichten klickt man auf den Stack, anschließend unten auf den Reiter *Outputs*. Der Key _DnsAddress_ verrät den Hostnamen des DC/OS Masters, den man nun mittels http://<hostname> aufrufen kann.
+
 ## In DC/OS die SMACK Services installieren
 
+Nichts einfacher als das: Unter _Catalog_ findet man zahlreiche Frameworks, die man sehr einfach installieren kann - darunter *Cassandra*, *Kafka* und *Spark*.
 
 ## DC/OS command line lokal einrichten
 
