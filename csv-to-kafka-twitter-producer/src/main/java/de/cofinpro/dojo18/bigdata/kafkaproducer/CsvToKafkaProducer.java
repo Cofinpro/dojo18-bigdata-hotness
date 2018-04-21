@@ -42,7 +42,7 @@ public class CsvToKafkaProducer {
             String content = getValueFromRecordForTweetContentWithMapping(csvRecord, TweetContent.CONTENT, mapping);
 
             KafkaTweet kafkaTweet = new KafkaTweet();
-            kafkaTweet.setId(id);
+            kafkaTweet.setIdStr(id);
             kafkaTweet.setUser(username);
             kafkaTweet.setContent(content);
 

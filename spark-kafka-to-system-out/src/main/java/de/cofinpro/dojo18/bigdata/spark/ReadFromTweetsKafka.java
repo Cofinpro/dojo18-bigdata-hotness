@@ -10,12 +10,10 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka010.ConsumerStrategies;
-import org.apache.spark.streaming.kafka010.KafkaRDD;
 import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.Tuple2;
 
 import java.util.*;
 
@@ -53,7 +51,7 @@ public class ReadFromTweetsKafka {
         JavaDStream<Optional<KafkaTweet>> streamOfKafkaTweetOptionals = stream.map(record -> KafkaTweet.fromJson(record.value()));
         streamOfKafkaTweetOptionals = streamOfKafkaTweetOptionals.filter(Optional::isPresent);
         JavaDStream<KafkaTweet> streamOfKafkaTweets = streamOfKafkaTweetOptionals.map(Optional::get);
-        streamOfKafkaTweets.print();
+
 
         streamingContext.start();
         streamingContext.awaitTermination();
