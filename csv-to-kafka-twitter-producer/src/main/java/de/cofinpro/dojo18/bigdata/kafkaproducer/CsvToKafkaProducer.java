@@ -47,7 +47,7 @@ public class CsvToKafkaProducer {
             kafkaTweet.setContent(content);
 
             logger.trace("Sending {} to Kafka-Topic = {}", kafkaTweet, TOPIC_NAME_FOR_TWEETS);
-            String json = buildJsonForKafkaTweet(kafkaTweet);
+            String json = kafkaTweet.toJson();
             kafkaProducer.send(new ProducerRecord<>(TOPIC_NAME_FOR_TWEETS, json));
             count++;
         }
@@ -58,16 +58,5 @@ public class CsvToKafkaProducer {
     String getValueFromRecordForTweetContentWithMapping(CSVRecord csvRecord, TweetContent tweetContent, CsvToTwitterDataMapping mapping) {
         Optional<Integer> columnIndex = mapping.getColumnIndexForTweetContent(tweetContent);
         return columnIndex.isPresent() ? csvRecord.get(columnIndex.get()) : "";
-    }
-
-    String buildJsonForKafkaTweet(KafkaTweet kafkaTweet) {
-        String json = "";
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            json = objectMapper.writeValueAsString(kafkaTweet);
-        } catch (JsonProcessingException e) {
-            // nop
-        }
-        return json;
     }
 }

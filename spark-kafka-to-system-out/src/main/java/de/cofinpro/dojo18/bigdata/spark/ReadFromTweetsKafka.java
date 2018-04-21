@@ -1,13 +1,16 @@
 package de.cofinpro.dojo18.bigdata.spark;
 
+import de.cofinpro.dojo18.bigdata.model.KafkaTweet;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.streaming.Durations;
+import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka010.ConsumerStrategies;
+import org.apache.spark.streaming.kafka010.KafkaRDD;
 import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
 import org.slf4j.Logger;
@@ -47,9 +50,10 @@ public class ReadFromTweetsKafka {
                         ConsumerStrategies.Subscribe(topics, kafkaParams)
                 );
 
-        logger.info("Now I have a stream object with {}....and now??");
-
-        stream.map(record -> record.value()).print();
+        JavaDStream<Optional<KafkaTweet>> streamOfKafkaTweetOptionals = stream.map(record -> KafkaTweet.fromJson(record.value()));
+        streamOfKafkaTweetOptionals = streamOfKafkaTweetOptionals.filter(Optional::isPresent);
+        JavaDStream<KafkaTweet> streamOfKafkaTweets = streamOfKafkaTweetOptionals.map(Optional::get);
+        streamOfKafkaTweets.print();
 
         streamingContext.start();
         streamingContext.awaitTermination();

@@ -12,7 +12,6 @@
 
     <modules>
         <module>csv-to-kafka-twitter-producer</module>
-        <module>kafka-to-system-out</module>
         <module>model</module>
         <module>spark-kafka-to-system-out</module>
     </modules>
