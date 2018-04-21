@@ -1,0 +1,21 @@
+{
+    "id": "twitter-producer",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "cofinpro/twitter-producer:latest"
+        }
+    },
+    "cmd": "/usr/bin/java -jar twitterProducer.jar -b$KAFKA_BROKER",
+    "cpus": 1.0,
+    "mem": 1024.0,
+    "instances":1,
+    "env": {
+        "KAFKA_BROKER": "broker.kafka.l4lb.thisdcos.directory:9092"
+    },
+    "healthChecks": [ {
+        "gracePeriodSeconds": 60,
+        "intervalChecks": 600,
+        "maxConsecutiveFailures": 3
+    } ]
+}
