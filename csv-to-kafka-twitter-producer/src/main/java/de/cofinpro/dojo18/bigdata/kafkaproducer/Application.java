@@ -36,9 +36,9 @@ public class Application {
                 .build();
 
         CsvToKafkaProducer csvToKafkaProducer = new CsvToKafkaProducer();
-        InputStream is = Application.class.getClassLoader().getResourceAsStream(NAME_OF_CSV_FILE);
         for (int i = 0; i < RESEND_ITERATIONS; i++) { // TODO: make this configurable
             logger.info("Iteration {} of {}", i+1, RESEND_ITERATIONS);
+            InputStream is = Application.class.getClassLoader().getResourceAsStream(NAME_OF_CSV_FILE);
             Iterable<CSVRecord> records = csvToKafkaProducer.createRecordsFromCsvFile(is);
             csvToKafkaProducer.sendRecordsToKafka(records, mapping, kafkaProducer);
             logger.info("Waiting 5 seconds until re-sending..");
