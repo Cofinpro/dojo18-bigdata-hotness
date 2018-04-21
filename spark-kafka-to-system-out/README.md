@@ -10,3 +10,4 @@ damit Dinge machen.
 * https://spark.apache.org/docs/latest/streaming-programming-guide.html
 * https://github.com/apache/spark/blob/master/examples/src/main/java/org/apache/spark/examples/streaming/JavaDirectKafkaWordCount.java
 * https://spark.apache.org/docs/preview/streaming-kafka-integration.html
+* https://spark.apache.org/docs/latest/streaming-kafka-0-10-integration.html
