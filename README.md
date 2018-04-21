@@ -45,6 +45,16 @@ bin/windows/zookeeper-server-start.bat config/zookeeper.properties
 bin/windows/kafka-server-start.bat config/server.properties
 ```
 
+#### Neue Topic namens _test_ in Kafka anlegen (ohne Replikation und Partitionierung)
+```
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+```
+
+#### Liste aller topics in Kafka ausgeben
+```
+bin/windows/kafka-topics.bat --list --zookeeper localhost:2181
+```
+
 ## Java-Programm für CSV-Import
 Derzeit ist das Programm nur in der Lage eine CSV-Datei aus dem Resources-Ordner
 in Kafka hineinzupushen. Folgende Voraussetzungen müssen gelten:
