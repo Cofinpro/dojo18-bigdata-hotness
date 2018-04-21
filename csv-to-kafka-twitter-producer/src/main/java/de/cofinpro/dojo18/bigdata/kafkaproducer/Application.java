@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -39,7 +40,6 @@ public class Application {
 
         Producer<String, String> kafkaProducer = new KafkaProducer<>(props);
 
-        File file = new File(Application.class.getClassLoader().getResource(NAME_OF_CSV_FILE).getFile());
         CsvToTwitterDataMapping mapping = CsvToTwitterDataMapping.newBuilder()
                 .addMapping(TweetContent.ID, 0)
                 .addMapping(TweetContent.USER, 4)
@@ -47,9 +47,10 @@ public class Application {
                 .build();
 
         CsvToKafkaProducer csvToKafkaProducer = new CsvToKafkaProducer();
+        InputStream is = Application.class.getClassLoader().getResourceAsStream(NAME_OF_CSV_FILE);
         for (int i = 0; i < RESEND_ITERATIONS; i++) { // TODO: make this configurable
             logger.info("Iteration {} of {}", i+1, RESEND_ITERATIONS);
-            Iterable<CSVRecord> records = csvToKafkaProducer.createRecordsFromCsvFile(file);
+            Iterable<CSVRecord> records = csvToKafkaProducer.createRecordsFromCsvFile(is);
             csvToKafkaProducer.sendRecordsToKafka(records, mapping, kafkaProducer);
             logger.info("Waiting 5 seconds until re-sending..");
             Thread.sleep(5000);

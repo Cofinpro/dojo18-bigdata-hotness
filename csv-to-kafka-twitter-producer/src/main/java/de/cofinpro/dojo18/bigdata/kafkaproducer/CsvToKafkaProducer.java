@@ -10,10 +10,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.Optional;
 
 /**
@@ -23,6 +20,14 @@ public class CsvToKafkaProducer {
 
     private static final String TOPIC_NAME_FOR_TWEETS = "tweets";
     private Logger logger = LoggerFactory.getLogger(getClass());
+
+    public Iterable<CSVRecord> createRecordsFromCsvFile(InputStream is) throws IOException {
+        logger.info("Creating records from CSV-File");
+        CSVFormat csvFormat = CSVFormat.EXCEL
+                .withDelimiter(';')
+                .withFirstRecordAsHeader();
+        return csvFormat.parse(new InputStreamReader(is));
+    }
 
     public Iterable<CSVRecord> createRecordsFromCsvFile(File file) throws IOException {
         logger.info("Creating records from CSV-File");
