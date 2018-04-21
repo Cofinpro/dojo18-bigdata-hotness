@@ -4,6 +4,8 @@ Im SMACK-Stack wird das M durch DC/OS repräsentiert.
 DC/OS soll die einfache Verwaltung und Installation von Paketen und Services (Anwendungen) vereinfachen
 und dient gleichzeitig dazu, den Cluster zu verwalten.
 
+![DC/OS Layer](dcos.png)
+
 Pakete und Services können einfach über die DC/OS CLI gemanagt und installiert werden.
 
 ## Basispakete über Repository installieren
