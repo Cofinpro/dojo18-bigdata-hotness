@@ -25,18 +25,7 @@ public class Application {
         logger.info("Starting application");
 
         CommandLine commandLine = getCommandLine(args);
-
-        String bootstrapServers = commandLine.getOptionValue(CommandlineOption.BOOTSTRAP_SERVERS.getShortName(), "localhost:9092");
-
-        Properties props = new Properties();
-        props.put("bootstrap.servers", bootstrapServers);
-        props.put("acks", "all");
-        props.put("retries", 0);
-        props.put("batch.size", 16384);
-        props.put("linger.ms", 1);
-        props.put("buffer.memory", 33554432);
-        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        Properties props = initProperties(commandLine);
 
         Producer<String, String> kafkaProducer = new KafkaProducer<>(props);
 
@@ -56,6 +45,21 @@ public class Application {
             Thread.sleep(5000);
         }
         kafkaProducer.close();
+    }
+
+    private static Properties initProperties(CommandLine commandLine) {
+        String bootstrapServers = commandLine.getOptionValue(CommandlineOption.BOOTSTRAP_SERVERS.getShortName(), "localhost:9092");
+
+        Properties props = new Properties();
+        props.put("bootstrap.servers", bootstrapServers);
+        props.put("acks", "all");
+        props.put("retries", 0);
+        props.put("batch.size", 16384);
+        props.put("linger.ms", 1);
+        props.put("buffer.memory", 33554432);
+        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        return props;
     }
 
     private static CommandLine getCommandLine(String args[]) {
