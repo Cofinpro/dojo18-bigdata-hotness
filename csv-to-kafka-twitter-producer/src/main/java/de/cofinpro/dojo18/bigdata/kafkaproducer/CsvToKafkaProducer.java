@@ -23,13 +23,18 @@ public class CsvToKafkaProducer {
     private static final String TOPIC_NAME_FOR_TWEETS = "tweets";
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    public void produceFromCsvFile(File file, CsvToTwitterDataMapping mapping, Producer<String, String> kafkaProducer) throws IOException {
-        long count = 0;
+    public Iterable<CSVRecord> createRecordsFromCsvFile(File file) throws IOException {
+        logger.info("Creating records from CSV-File");
         Reader in = new FileReader(file);
         CSVFormat csvFormat = CSVFormat.EXCEL
                 .withDelimiter(';')
                 .withFirstRecordAsHeader();
-        Iterable<CSVRecord> records = csvFormat.parse(in);
+        return csvFormat.parse(in);
+    }
+
+    public void sendRecordsToKafka(Iterable<CSVRecord> records, CsvToTwitterDataMapping mapping, Producer<String, String> kafkaProducer) {
+        logger.info("Starting to send records to kafka");
+        long count = 0;
         for (CSVRecord csvRecord : records) {
             String id = getValueFromRecordForTweetContentWithMapping(csvRecord, TweetContent.ID, mapping).trim();
             String username = getValueFromRecordForTweetContentWithMapping(csvRecord, TweetContent.USER, mapping);
