@@ -2,6 +2,7 @@ package de.cofinpro.dojo18.bigdata.kafkaproducer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.cofinpro.dojo18.bigdata.model.KafkaTweet;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.kafka.clients.producer.Producer;
