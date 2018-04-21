@@ -29,6 +29,10 @@ public class KafkaTweet implements Serializable {
     @JsonProperty("text")
     String content;
 
+    private int negative;
+
+    private int positive;
+
     public String getIdStr() {
         return idStr;
     }
@@ -53,12 +57,30 @@ public class KafkaTweet implements Serializable {
         this.content = content;
     }
 
+    public int getNegative() {
+        return negative;
+    }
+
+    public void setNegative(int negative) {
+        this.negative = negative;
+    }
+
+    public int getPositive() {
+        return positive;
+    }
+
+    public void setPositive(int positive) {
+        this.positive = positive;
+    }
+
     @Override
     public String toString() {
         return "KafkaTweet{" +
                 "idStr='" + idStr + '\'' +
                 ", user='" + user + '\'' +
                 ", content='" + content + '\'' +
+                ", negative=" + negative +
+                ", positive=" + positive +
                 '}';
     }
 
