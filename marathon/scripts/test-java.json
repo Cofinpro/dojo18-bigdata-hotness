@@ -1,7 +1,13 @@
 {
-    "id": "test-java", 
-    "cmd": "jre*/bin/java -v",
-    "cpus": 0.1,
+    "id": "test-java-docker",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "openjdk:8"
+        }
+    },
+    "cmd": "java -version",
+    "cpus": 0.2,
     "mem": 32.0,
-    "instances": 1
+    "instances":1
 }

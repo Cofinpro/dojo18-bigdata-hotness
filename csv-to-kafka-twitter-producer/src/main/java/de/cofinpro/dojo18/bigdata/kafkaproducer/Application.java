@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -24,7 +25,29 @@ public class Application {
         logger.info("Starting application");
 
         CommandLine commandLine = getCommandLine(args);
+        Properties props = initProperties(commandLine);
 
+        Producer<String, String> kafkaProducer = new KafkaProducer<>(props);
+
+        CsvToTwitterDataMapping mapping = CsvToTwitterDataMapping.newBuilder()
+                .addMapping(TweetContent.ID, 0)
+                .addMapping(TweetContent.USER, 4)
+                .addMapping(TweetContent.CONTENT, 6)
+                .build();
+
+        CsvToKafkaProducer csvToKafkaProducer = new CsvToKafkaProducer();
+        for (int i = 0; i < RESEND_ITERATIONS; i++) { // TODO: make this configurable
+            logger.info("Iteration {} of {}", i+1, RESEND_ITERATIONS);
+            InputStream is = Application.class.getClassLoader().getResourceAsStream(NAME_OF_CSV_FILE);
+            Iterable<CSVRecord> records = csvToKafkaProducer.createRecordsFromCsvFile(is);
+            csvToKafkaProducer.sendRecordsToKafka(records, mapping, kafkaProducer);
+            logger.info("Waiting 5 seconds until re-sending..");
+            Thread.sleep(5000);
+        }
+        kafkaProducer.close();
+    }
+
+    private static Properties initProperties(CommandLine commandLine) {
         String bootstrapServers = commandLine.getOptionValue(CommandlineOption.BOOTSTRAP_SERVERS.getShortName(), "localhost:9092");
 
         Properties props = new Properties();
@@ -36,25 +59,7 @@ public class Application {
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-
-        Producer<String, String> kafkaProducer = new KafkaProducer<>(props);
-
-        File file = new File(Application.class.getClassLoader().getResource(NAME_OF_CSV_FILE).getFile());
-        CsvToTwitterDataMapping mapping = CsvToTwitterDataMapping.newBuilder()
-                .addMapping(TweetContent.ID, 0)
-                .addMapping(TweetContent.USER, 4)
-                .addMapping(TweetContent.CONTENT, 6)
-                .build();
-
-        CsvToKafkaProducer csvToKafkaProducer = new CsvToKafkaProducer();
-        for (int i = 0; i < RESEND_ITERATIONS; i++) { // TODO: make this configurable
-            logger.info("Iteration {} of {}", i+1, RESEND_ITERATIONS);
-            Iterable<CSVRecord> records = csvToKafkaProducer.createRecordsFromCsvFile(file);
-            csvToKafkaProducer.sendRecordsToKafka(records, mapping, kafkaProducer);
-            logger.info("Waiting 5 seconds until re-sending..");
-            Thread.sleep(5000);
-        }
-        kafkaProducer.close();
+        return props;
     }
 
     private static CommandLine getCommandLine(String args[]) {
