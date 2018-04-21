@@ -1,8 +1,10 @@
 package de.cofinpro.dojo18.bigdata.kafkaproducer;
 
+import org.apache.commons.csv.CSVRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,9 +14,13 @@ import java.util.Properties;
  * Created by David Olah on 20.04.2018.
  */
 public class Application {
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
     private static final String NAME_OF_CSV_FILE = "dashboard_x_usa_x_filter_nativeretweets.csv";
+    private static final int RESEND_ITERATIONS = 100000;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        logger.info("Starting application");
+
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("acks", "all");
@@ -33,9 +39,15 @@ public class Application {
                 .addMapping(TweetContent.USER, 4)
                 .addMapping(TweetContent.CONTENT, 6)
                 .build();
-        CsvToKafkaProducer csvToKafkaProducer = new CsvToKafkaProducer();
-        csvToKafkaProducer.produceFromCsvFile(file, mapping, kafkaProducer);
 
+        CsvToKafkaProducer csvToKafkaProducer = new CsvToKafkaProducer();
+        for (int i = 0; i < RESEND_ITERATIONS; i++) { // TODO: make this configurable
+            logger.info("Iteration {} of {}", i+1, RESEND_ITERATIONS);
+            Iterable<CSVRecord> records = csvToKafkaProducer.createRecordsFromCsvFile(file);
+            csvToKafkaProducer.sendRecordsToKafka(records, mapping, kafkaProducer);
+            logger.info("Waiting 5 seconds until re-sending..");
+            Thread.sleep(5000);
+        }
         kafkaProducer.close();
     }
 }
