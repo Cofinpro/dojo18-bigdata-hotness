@@ -1,0 +1,7 @@
+{
+    "id": "test-java", 
+    "cmd": "jre*/bin/java -v",
+    "cpus": 0.1,
+    "mem": 32.0,
+    "instances": 1
+}
